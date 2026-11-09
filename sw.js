@@ -1,4 +1,4 @@
-const CACHE_NAME = 'diwali-patakha-v2';
+const CACHE_NAME = 'diwali-patakha-v3';
 const ASSETS = [
   './',
   './index.html',

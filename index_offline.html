@@ -185,7 +185,7 @@ button:focus-visible { outline: 2px solid var(--text); outline-offset: 2px; }
 .round svg { width: 20px; height: 20px; stroke: var(--text); fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
 
 #hint {
-  position: absolute; left: 50%; bottom: calc(env(safe-area-inset-bottom, 0px) + 95px); transform: translateX(-50%);
+  position: absolute; left: 50%; bottom: calc(env(safe-area-inset-bottom, 0px) + 115px); transform: translateX(-50%);
   width: max-content; max-width: calc(100vw - 32px); padding: 7px 14px; border-radius: 10px; background: var(--tray);
   font-size: 13.5px; text-align: center; opacity: 0; transition: opacity .35s; pointer-events: none; z-index: 15;
   backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); box-shadow: 0 4px 12px rgba(0,0,0,0.4);
@@ -193,21 +193,24 @@ button:focus-visible { outline: 2px solid var(--text); outline-offset: 2px; }
 #hint.show { opacity: 1; }
 
 #picker {
-  position: absolute; left: 0; right: 0; bottom: 0; display: flex; gap: 8px; overflow-x: auto;
+  position: absolute; left: 0; right: 0; bottom: 0; display: flex; gap: 9px; overflow-x: auto;
   touch-action: pan-x; -webkit-overflow-scrolling: touch; scrollbar-width: none;
-  padding: 8px calc(env(safe-area-inset-right, 0px) + 12px) calc(env(safe-area-inset-bottom, 0px) + 12px) calc(env(safe-area-inset-left, 0px) + 12px);
+  padding: 12px calc(env(safe-area-inset-right, 0px) + 12px) calc(env(safe-area-inset-bottom, 0px) + 26px) calc(env(safe-area-inset-left, 0px) + 12px);
+  background: linear-gradient(to top, rgba(13, 10, 22, 0.96) 0%, rgba(13, 10, 22, 0.72) 80%, transparent 100%);
   z-index: 10;
 }
 #picker::-webkit-scrollbar { display: none; }
+#picker::after { content: ''; flex: 0 0 16px; height: 1px; }
+
 .pick {
-  flex: none; width: 72px; min-width: 72px; display: grid; justify-items: center; gap: 2px;
-  padding: 8px 3px 6px; border: 0; border-radius: 12px; cursor: pointer;
-  background: var(--tray); font-size: 11px; white-space: nowrap;
-  backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
-  border: 1px solid rgba(255, 243, 226, 0.08); box-shadow: 0 3px 8px rgba(0,0,0,0.3);
+  flex: none; min-width: 76px; width: auto; max-width: 105px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px;
+  padding: 9px 10px 8px; border: 0; border-radius: 14px; cursor: pointer;
+  background: var(--tray); font-size: 11.5px; white-space: nowrap;
+  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 243, 226, 0.14); box-shadow: 0 4px 10px rgba(0,0,0,0.35);
 }
 .pick span {
-  display: block; max-width: 66px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; text-align: center;
+  display: block; font-size: 11.5px; font-weight: 500; text-align: center; white-space: nowrap; max-width: none;
 }
 .pick svg { width: 28px; height: 28px; stroke: currentColor; fill: none; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
 .pick[aria-pressed="true"] { background: var(--marigold); color: #1a1205; font-weight: 600; }
@@ -2014,7 +2017,7 @@ if ($('recBtn')) $('recBtn').addEventListener('click', startVideoRec);
 
 // Register PWA Service Worker
 if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('./sw.js?v=2').then(r => r.update()).catch(() => {});
+  navigator.serviceWorker.register('./sw.js?v=3').then(r => r.update()).catch(() => {});
 }
 
 /* --- Camera Flip, Snapshot, Music, and Greeting Card Logic --- */
