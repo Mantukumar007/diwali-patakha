@@ -128,6 +128,16 @@ button:focus-visible { outline: 2px solid var(--text); outline-offset: 2px; }
   transform: scale(0.92);
 }
 
+
+.start-features {
+  display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin: 0 0 22px; max-width: 320px;
+}
+.start-features span {
+  background: rgba(255, 174, 43, 0.16); border: 1px solid rgba(255, 174, 43, 0.45);
+  color: #ffebcc; font-size: 12px; font-weight: 500; padding: 4px 10px; border-radius: 999px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+
 /* --- Festive Updates & Features --- */
 #ecoBadge {
   display: flex; align-items: center; gap: 5px; padding: 5px 10px;
@@ -277,12 +287,18 @@ button:focus-visible { outline: 2px solid var(--text); outline-offset: 2px; }
 </div>
 
 <section id="start" aria-labelledby="title">
-  <small>Happy Diwali</small>
+  <small>✨ Shubh Deepavali ✨</small>
   <h1 id="title">Diwali Patakha</h1>
-  <p id="lede">Tap the sky to burst a firework. Tilt down to set off bombs.</p>
-  <button id="startBtn" type="button">Start</button>
+  <p id="lede">Camera AR Diwali fireworks, Anar, Chakkar, Phuljhadi, Sky Draw & Target Game!</p>
+  <div class="start-features">
+    <span>🎆 15+ Crackers</span>
+    <span>✍️ Sky Draw</span>
+    <span>📸 Photo/Video</span>
+    <span>🎮 Target Game</span>
+    <span>🏮 Sky Lanterns</span>
+  </div>
+  <button id="startBtn" type="button">Start Fireworks</button>
   <p class="fine" id="note" hidden></p>
-  
 </section>
 
 
@@ -1992,7 +2008,7 @@ if ($('recBtn')) $('recBtn').addEventListener('click', startVideoRec);
 
 // Register PWA Service Worker
 if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('./sw.js').catch(() => {});
+  navigator.serviceWorker.register('./sw.js?v=2').then(r => r.update()).catch(() => {});
 }
 
 /* --- Camera Flip, Snapshot, Music, and Greeting Card Logic --- */
