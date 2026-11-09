@@ -1,0 +1,25 @@
+{
+  "name": "Diwali Patakha - AR Firecrackers",
+  "short_name": "Diwali Patakha",
+  "description": "Diwali firecrackers through your phone camera in Augmented Reality with real-time sound and 3D fireworks.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#0d0a16",
+  "theme_color": "#ffae2b",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "./assets/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "./assets/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
+
