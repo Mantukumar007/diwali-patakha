@@ -19,6 +19,38 @@
   src: url('./assets/YatraOne.ttf') format('truetype');
 }
 
+
+/* --- Mobile Responsive Layout: Top Bar + Right Action Dock --- */
+#top {
+  position: absolute; left: 0; right: 0; top: 0; display: flex; align-items: center; gap: 8px;
+  padding: calc(env(safe-area-inset-top, 0px) + 10px) calc(env(safe-area-inset-right, 0px) + 12px) 0 calc(env(safe-area-inset-left, 0px) + 12px);
+  z-index: 10;
+}
+#top .round {
+  width: 40px; height: 40px; background: var(--tray);
+  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.4); border: 1px solid rgba(255, 243, 226, 0.12);
+}
+
+#actionSidebar {
+  position: absolute;
+  right: calc(env(safe-area-inset-right, 0px) + 12px);
+  top: calc(env(safe-area-inset-top, 0px) + 62px);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 10;
+}
+#actionSidebar .round {
+  width: 40px; height: 40px; background: var(--tray);
+  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.45); border: 1px solid rgba(255, 243, 226, 0.14);
+  transition: transform 0.15s, background 0.15s;
+}
+#actionSidebar .round:active {
+  transform: scale(0.92);
+}
+
 /* --- Festive Updates & Features --- */
 #ecoBadge {
   display: flex; align-items: center; gap: 5px; padding: 5px 10px;
@@ -51,7 +83,7 @@
 }
 .modal-box {
   background: #171124; border: 1px solid var(--marigold); border-radius: 16px;
-  padding: 24px; max-width: 360px; width: 100%; text-align: center; color: var(--text);
+  padding: 24px; max-width: min(340px, 92vw); margin: auto; width: 100%; text-align: center; color: var(--text);
   box-shadow: 0 10px 30px rgba(0,0,0,0.8), 0 0 20px rgba(255, 174, 43, 0.2);
 }
 .modal-box h2 { font-family: var(--font-title); margin: 0 0 8px; color: var(--marigold); font-size: 24px; }
@@ -127,7 +159,7 @@ body {
 button { font: inherit; color: inherit; }
 button:focus-visible { outline: 2px solid var(--text); outline-offset: 2px; }
 
-#stage { position: fixed; inset: 0; overflow: hidden; }
+#stage { position: fixed; inset: 0; width: 100vw; height: 100dvh; height: 100vh; overflow: hidden; }
 #scene { position: absolute; inset: 0; }
 #cam, #gl { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
 #cam { object-fit: cover; background: var(--night); }
@@ -143,27 +175,37 @@ button:focus-visible { outline: 2px solid var(--text); outline-offset: 2px; }
 .round svg { width: 20px; height: 20px; stroke: var(--text); fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
 
 #hint {
-  position: absolute; left: 50%; bottom: calc(env(safe-area-inset-bottom, 0px) + 118px); transform: translateX(-50%);
-  width: max-content; max-width: calc(100vw - 32px); padding: 8px 14px; border-radius: 10px; background: var(--tray);
-  font-size: 15px; text-align: center; opacity: 0; transition: opacity .35s; pointer-events: none;
+  position: absolute; left: 50%; bottom: calc(env(safe-area-inset-bottom, 0px) + 95px); transform: translateX(-50%);
+  width: max-content; max-width: calc(100vw - 32px); padding: 7px 14px; border-radius: 10px; background: var(--tray);
+  font-size: 13.5px; text-align: center; opacity: 0; transition: opacity .35s; pointer-events: none; z-index: 15;
+  backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); box-shadow: 0 4px 12px rgba(0,0,0,0.4);
 }
 #hint.show { opacity: 1; }
 
 #picker {
-  position: absolute; left: 0; right: 0; bottom: 0; display: flex; gap: 8px; overflow-x: auto; touch-action: pan-x; scrollbar-width: none;
-  padding: 8px calc(env(safe-area-inset-right, 0px) + 12px) calc(env(safe-area-inset-bottom, 0px) + 14px) calc(env(safe-area-inset-left, 0px) + 12px);
+  position: absolute; left: 0; right: 0; bottom: 0; display: flex; gap: 8px; overflow-x: auto;
+  touch-action: pan-x; -webkit-overflow-scrolling: touch; scrollbar-width: none;
+  padding: 8px calc(env(safe-area-inset-right, 0px) + 12px) calc(env(safe-area-inset-bottom, 0px) + 12px) calc(env(safe-area-inset-left, 0px) + 12px);
+  z-index: 10;
 }
 #picker::-webkit-scrollbar { display: none; }
 .pick {
-  flex: none; width: 76px; display: grid; justify-items: center; gap: 3px; padding: 9px 4px 8px; border: 0; border-radius: 14px; cursor: pointer;
-  background: var(--tray); font-size: 12.5px; white-space: nowrap;
+  flex: none; width: 72px; min-width: 72px; display: grid; justify-items: center; gap: 2px;
+  padding: 8px 3px 6px; border: 0; border-radius: 12px; cursor: pointer;
+  background: var(--tray); font-size: 11px; white-space: nowrap;
+  backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+  border: 1px solid rgba(255, 243, 226, 0.08); box-shadow: 0 3px 8px rgba(0,0,0,0.3);
+}
+.pick span {
+  display: block; max-width: 66px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; text-align: center;
 }
 .pick svg { width: 28px; height: 28px; stroke: currentColor; fill: none; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
 .pick[aria-pressed="true"] { background: var(--marigold); color: #1a1205; font-weight: 600; }
 
 #start {
-  position: fixed; inset: 0; z-index: 10; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;
-  padding: calc(env(safe-area-inset-top, 0px) + 18vh) 24px calc(env(safe-area-inset-bottom, 0px) + 56px);
+  position: fixed; inset: 0; z-index: 30; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;
+  padding: calc(env(safe-area-inset-top, 0px) + 16px) 20px calc(env(safe-area-inset-bottom, 0px) + 20px);
+  overflow-y: auto; -webkit-overflow-scrolling: touch; background: var(--night);
 }
 #start small { display: block; margin-bottom: 4px; font-size: 15px; color: var(--marigold); }
 #start h1 { margin: 0 0 10px; font-family: var(--font-title); font-weight: 400; font-size: clamp(44px, 13vw, 60px); line-height: 1.1; }
@@ -197,34 +239,38 @@ button:focus-visible { outline: 2px solid var(--text); outline-offset: 2px; }
         <span class="eco-tag">🌿 Eco</span>
       </div>
       <div class="spacer"></div>
-      <button class="round" id="flipBtn" type="button" aria-label="Switch Camera">
-        <svg viewBox="0 0 24 24"><path d="M20 10c0-4.4-3.6-8-8-8s-8 3.6-8 8v2M4 10l-2-2m2 2l2-2M4 14c0 4.4 3.6 8 8 8s8-3.6 8-8v-2M20 14l2 2m-2-2l-2 2"/></svg>
-      </button>
-      <button class="round" id="recBtn" type="button" aria-label="Record Video">
-        <svg viewBox="0 0 24 24" id="icoRec"><circle cx="12" cy="12" r="7" fill="#e02424" stroke="none"/><circle cx="12" cy="12" r="10"/></svg>
-      </button>
-      <button class="round" id="gameBtn" type="button" aria-label="Diwali Target Game">
-        <svg viewBox="0 0 24 24"><path d="M6 12h4m-2-2v4M15 11h.01M18 13h.01M3 8a3 3 0 0 1 3-3h12a3 3 0 0 1 3 3v8a3 3 0 0 1-3 3H6a3 3 0 0 1-3-3V8z"/></svg>
-      </button>
-      <button class="round" id="snapBtn"  type="button" aria-label="Take Photo">
-        <svg viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
-      </button>
-      <button class="round" id="musicBtn" type="button" aria-label="Festive Ambient Music">
-        <svg viewBox="0 0 24 24" id="icoMusicOff"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/><path d="M1 1l22 22"/></svg>
-        <svg viewBox="0 0 24 24" id="icoMusicOn" hidden><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
-      </button>
-      <button class="round" id="cardBtn" type="button" aria-label="Greeting Card">
-        <svg viewBox="0 0 24 24"><path d="M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-7M4 8l8 5 8-5M4 8a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v1"/></svg>
-      </button>
-      <button class="round" id="hideBtn" type="button" aria-label="Hide controls for recording">
+      <button class="round" id="hideBtn" type="button" aria-label="Hide controls for recording" title="Hide UI">
         <svg viewBox="0 0 24 24"><path d="M3 3l18 18"/><path d="M10.6 5.2A10 10 0 0 1 12 5c6 0 9.500 7 9.500 7a16 16 0 0 1-3.200 4M6.300 6.800A16 16 0 0 0 2.500 12S6 19 12 19a9.500 9.500 0 0 0 4.100-.9"/><path d="M9.900 9.900a3 3 0 0 0 4.200 4.200"/></svg>
       </button>
-      <button class="round" id="muteBtn" type="button" aria-label="Mute sound">
+      <button class="round" id="muteBtn" type="button" aria-label="Mute sound" title="Mute/Unmute">
         <svg viewBox="0 0 24 24" id="icoSound"><path d="M4 9h4l5-4v14l-5-4H4z"/><path d="M16.5 8.5a5 5 0 0 1 0 7"/><path d="M19 6a8.5 8.5 0 0 1 0 12"/></svg>
         <svg viewBox="0 0 24 24" id="icoMuted" hidden><path d="M4 9h4l5-4v14l-5-4H4z"/><path d="M17 9l5 6M22 9l-5 6"/></svg>
       </button>
     </div>
-    
+
+    <!-- Right Floating Action Sidebar (Camera, Record, Game, Music, Card) -->
+    <div id="actionSidebar">
+      <button class="round" id="flipBtn" type="button" aria-label="Switch Camera" title="Flip Camera">
+        <svg viewBox="0 0 24 24"><path d="M20 10c0-4.4-3.6-8-8-8s-8 3.6-8 8v2M4 10l-2-2m2 2l2-2M4 14c0 4.4 3.6 8 8 8s8-3.6 8-8v-2M20 14l2 2m-2-2l-2 2"/></svg>
+      </button>
+      <button class="round" id="snapBtn" type="button" aria-label="Take Photo" title="Take Photo">
+        <svg viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+      </button>
+      <button class="round" id="recBtn" type="button" aria-label="Record Video" title="Record Video">
+        <svg viewBox="0 0 24 24" id="icoRec"><circle cx="12" cy="12" r="7" fill="#e02424" stroke="none"/><circle cx="12" cy="12" r="10"/></svg>
+      </button>
+      <button class="round" id="gameBtn" type="button" aria-label="Diwali Target Game" title="Target Game">
+        <svg viewBox="0 0 24 24"><path d="M6 12h4m-2-2v4M15 11h.01M18 13h.01M3 8a3 3 0 0 1 3-3h12a3 3 0 0 1 3 3v8a3 3 0 0 1-3 3H6a3 3 0 0 1-3-3V8z"/></svg>
+      </button>
+      <button class="round" id="musicBtn" type="button" aria-label="Festive Ambient Music" title="Festive Music">
+        <svg viewBox="0 0 24 24" id="icoMusicOff"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/><path d="M1 1l22 22"/></svg>
+        <svg viewBox="0 0 24 24" id="icoMusicOn" hidden><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+      </button>
+      <button class="round" id="cardBtn" type="button" aria-label="Greeting Card" title="Greeting Card">
+        <svg viewBox="0 0 24 24"><path d="M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-7M4 8l8 5 8-5M4 8a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v1"/></svg>
+      </button>
+    </div>
+
     <div id="gameHud" hidden>
       <span>🎯 Score: <strong id="gameScore">0</strong></span>
       <span>⏱️ <strong id="gameTimer">60s</strong></span>
@@ -1529,7 +1575,7 @@ function toggleUi(force) {
   if (uiHidden) hint('Controls hidden for recording. Two-finger tap brings them back.', 2400);
 }
 stage.addEventListener('pointerdown', (e) => {
-  if (!playing || (e.target.closest && e.target.closest('button, #picker'))) return;
+  if (!playing || (e.target.closest && e.target.closest('button, #picker, #actionSidebar, #cardModal, #gameOverModal, .modal-box'))) return;
   e.preventDefault();
   ensureAudio();
   fingers.set(e.pointerId, performance.now());
