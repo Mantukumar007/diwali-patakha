@@ -44,13 +44,45 @@ button:focus-visible { outline: 2px solid var(--text); outline-offset: 2px; }
 
 #top {
   position: absolute; left: 0; right: 0; top: 0; display: flex; align-items: center; gap: 8px;
-  padding: calc(env(safe-area-inset-top, 0px) + 12px) calc(env(safe-area-inset-right, 0px) + 14px) 0 calc(env(safe-area-inset-left, 0px) + 14px);
+  padding: calc(env(safe-area-inset-top, 0px) + 10px) calc(env(safe-area-inset-right, 0px) + 12px) 0 calc(env(safe-area-inset-left, 0px) + 12px);
+  z-index: 10; overflow-x: auto; scrollbar-width: none; -ms-overflow-style: none;
 }
+#top::-webkit-scrollbar { display: none; }
 #mode, #surfaceBtn { padding: 7px 12px; border: 0; border-radius: 999px; background: var(--tray); font-size: 14px; font-weight: 600; }
 #surfaceBtn { cursor: pointer; font-weight: 500; }
 .spacer { flex: 1; }
-.round { width: 42px; height: 42px; display: grid; place-items: center; padding: 0; border: 0; border-radius: 50%; background: var(--tray); cursor: pointer; }
+
+.round {
+  width: 40px; height: 40px; display: grid; place-items: center; padding: 0; border: 1px solid rgba(255, 243, 226, 0.12);
+  border-radius: 50%; background: var(--tray); cursor: pointer;
+  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); box-shadow: 0 3px 10px rgba(0, 0, 0, 0.4);
+  transition: transform 0.15s, background 0.15s;
+}
+.round:active { transform: scale(0.92); }
 .round svg { width: 20px; height: 20px; stroke: var(--text); fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+
+#actionSidebar {
+  position: absolute;
+  right: calc(env(safe-area-inset-right, 0px) + 12px);
+  top: calc(env(safe-area-inset-top, 0px) + 62px);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 10;
+}
+#actionSidebar .round {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.45); border: 1px solid rgba(255, 243, 226, 0.14);
+}
+
+#ecoBadge {
+  display: flex; align-items: center; gap: 5px; padding: 5px 10px;
+  border-radius: 999px; background: var(--tray); font-size: 13px; font-weight: 600; color: var(--marigold);
+  border: 1px solid rgba(255, 174, 43, 0.3); white-space: nowrap;
+}
+.eco-tag {
+  background: rgba(44, 106, 65, 0.7); color: #7ef6a4;
+  padding: 1px 6px; border-radius: 999px; font-size: 10.5px;
+}
 
 #hint {
   position: absolute; left: 50%; bottom: calc(env(safe-area-inset-bottom, 0px) + 115px); transform: translateX(-50%);
@@ -91,47 +123,6 @@ button:focus-visible { outline: 2px solid var(--text); outline-offset: 2px; }
 #start small { display: block; margin-bottom: 4px; font-size: 15px; color: var(--marigold); }
 #start h1 { margin: 0 0 10px; font-family: var(--font-title); font-weight: 400; font-size: clamp(44px, 13vw, 60px); line-height: 1.1; }
 #start p { margin: 0 0 24px; max-width: 30ch; font-size: 16px; color: var(--muted); }
-#startBtn { display: block; width: min(220px, 100%); padding: 14px 20px; border: 0; border-radius: 12px; background: var(--marigold); color: #1a1205; font-size: 17px; font-weight: 600; cursor: pointer; }
-#startBtn:disabled { opacity: .6; }
-#start .fine { margin: 14px 0 0; font-size: 13px; }
-
-#bootError { position: fixed; inset: auto 16px 20px; z-index: 20; padding: 12px 14px; border-radius: 10px; background: #231b33; font-size: 15px; }
-
-@media (prefers-reduced-motion: reduce) { #hint { transition: none; } }
-
-
-/* --- Mobile Responsive Layout: Top Bar + Right Action Dock --- */
-#top {
-  position: absolute; left: 0; right: 0; top: 0; display: flex; align-items: center; gap: 8px;
-  padding: calc(env(safe-area-inset-top, 0px) + 10px) calc(env(safe-area-inset-right, 0px) + 12px) 0 calc(env(safe-area-inset-left, 0px) + 12px);
-  z-index: 10;
-}
-#top .round {
-  width: 40px; height: 40px; background: var(--tray);
-  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.4); border: 1px solid rgba(255, 243, 226, 0.12);
-}
-
-#actionSidebar {
-  position: absolute;
-  right: calc(env(safe-area-inset-right, 0px) + 12px);
-  top: calc(env(safe-area-inset-top, 0px) + 62px);
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  z-index: 10;
-}
-#actionSidebar .round {
-  width: 40px; height: 40px; background: var(--tray);
-  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.45); border: 1px solid rgba(255, 243, 226, 0.14);
-  transition: transform 0.15s, background 0.15s;
-}
-#actionSidebar .round:active {
-  transform: scale(0.92);
-}
-
-
 .start-features {
   display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin: 0 0 22px; max-width: 320px;
 }
@@ -140,90 +131,11 @@ button:focus-visible { outline: 2px solid var(--text); outline-offset: 2px; }
   color: #ffebcc; font-size: 12px; font-weight: 500; padding: 4px 10px; border-radius: 999px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.3);
 }
+#startBtn { display: block; width: min(220px, 100%); padding: 14px 20px; border: 0; border-radius: 12px; background: var(--marigold); color: #1a1205; font-size: 17px; font-weight: 600; cursor: pointer; }
+#startBtn:disabled { opacity: .6; }
+#start .fine { margin: 14px 0 0; font-size: 13px; }
 
-/* --- Festive Updates & Features --- */
-#ecoBadge {
-  display: flex; align-items: center; gap: 5px; padding: 5px 10px;
-  border-radius: 999px; background: var(--tray); font-size: 13px; font-weight: 600; color: var(--marigold);
-  border: 1px solid rgba(255, 174, 43, 0.3); white-space: nowrap;
-}
-.eco-tag {
-  background: rgba(44, 106, 65, 0.7); color: #7ef6a4;
-  padding: 1px 6px; border-radius: 999px; font-size: 10.5px;
-}
-#greetBanner {
-  position: absolute; top: calc(env(safe-area-inset-top, 0px) + 54px); left: 50%;
-  transform: translateX(-50%);
-  background: linear-gradient(135deg, rgba(255, 174, 43, 0.35), rgba(184, 31, 28, 0.45));
-  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
-  border: 1px solid rgba(255, 174, 43, 0.55);
-  padding: 5px 16px; border-radius: 999px; font-family: var(--font-title);
-  font-size: 15px; color: #ffebcc; text-shadow: 0 0 10px rgba(255, 174, 43, 0.6);
-  pointer-events: none; z-index: 5; text-align: center; white-space: nowrap;
-  animation: bannerGlow 2.5s infinite alternate ease-in-out;
-}
-@keyframes bannerGlow {
-  0% { box-shadow: 0 0 10px rgba(255,174,43,0.3); border-color: rgba(255,174,43,0.4); }
-  100% { box-shadow: 0 0 20px rgba(255,174,43,0.7); border-color: rgba(255,174,43,0.8); }
-}
-
-#cardModal {
-  position: fixed; inset: 0; z-index: 50; display: flex; align-items: center; justify-content: center;
-  background: rgba(0, 0, 0, 0.78); backdrop-filter: blur(6px); padding: 20px;
-}
-.modal-box {
-  background: #171124; border: 1px solid var(--marigold); border-radius: 16px;
-  padding: 24px; max-width: min(340px, 92vw); margin: auto; width: 100%; text-align: center; color: var(--text);
-  box-shadow: 0 10px 30px rgba(0,0,0,0.8), 0 0 20px rgba(255, 174, 43, 0.2);
-}
-.modal-box h2 { font-family: var(--font-title); margin: 0 0 8px; color: var(--marigold); font-size: 24px; }
-.modal-box p { font-size: 14px; color: var(--muted); margin: 0 0 16px; line-height: 1.4; }
-.modal-input {
-  width: 100%; padding: 12px 14px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.2);
-  background: #251c38; color: #fff; font-size: 16px; margin-bottom: 14px; outline: none; box-sizing: border-box;
-}
-.modal-input:focus { border-color: var(--marigold); }
-.modal-btn {
-  width: 100%; padding: 12px; border-radius: 10px; border: 0; font-size: 15px; font-weight: 600;
-  cursor: pointer; margin-bottom: 10px; transition: transform 0.1s;
-}
-.modal-btn:active { transform: scale(0.98); }
-.btn-whatsapp { background: #25D366; color: #fff; }
-.btn-copy { background: var(--marigold); color: #1a1205; }
-.btn-close { background: transparent; color: var(--muted); border: 1px solid rgba(255,255,255,0.2); }
-
-
-/* --- Step 2 Advanced Features: Video Rec, Game HUD, PWA, Light-Paint --- */
-#top {
-  overflow-x: auto; scrollbar-width: none; -ms-overflow-style: none;
-}
-#top::-webkit-scrollbar { display: none; }
-
-#recBtn.recording {
-  background: #b81f1c !important; color: #fff !important;
-  animation: recPulse 1s infinite alternate;
-}
-@keyframes recPulse {
-  0% { box-shadow: 0 0 5px rgba(220, 36, 36, 0.5); }
-  100% { box-shadow: 0 0 20px rgba(220, 36, 36, 1); }
-}
-
-#gameHud {
-  position: absolute; top: calc(env(safe-area-inset-top, 0px) + 54px); left: 50%;
-  transform: translateX(-50%);
-  display: flex; align-items: center; gap: 12px;
-  background: rgba(13, 10, 22, 0.85); backdrop-filter: blur(8px);
-  border: 1px solid var(--marigold); padding: 6px 18px; border-radius: 999px;
-  font-size: 13.5px; font-weight: 600; color: var(--text); z-index: 5;
-  box-shadow: 0 4px 18px rgba(0,0,0,0.6); white-space: nowrap;
-}
-#gameHud strong { color: var(--marigold); }
-
-#gameOverModal {
-  position: fixed; inset: 0; z-index: 60; display: flex; align-items: center; justify-content: center;
-  background: rgba(0, 0, 0, 0.8); backdrop-filter: blur(8px); padding: 20px;
-}
-
+@media (prefers-reduced-motion: reduce) { #hint { transition: none; } }
 </style>
 <script type="importmap">
 { "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js" } }
@@ -255,7 +167,7 @@ button:focus-visible { outline: 2px solid var(--text); outline-offset: 2px; }
       </button>
     </div>
 
-    <!-- Right Floating Action Sidebar (Camera, Record, Game, Music, Card) -->
+    <!-- Right Floating Action Sidebar (Camera Flip & Photo Snapshot) -->
     <div id="actionSidebar">
       <button class="round" id="flipBtn" type="button" aria-label="Switch Camera" title="Flip Camera">
         <svg viewBox="0 0 24 24"><path d="M20 10c0-4.4-3.6-8-8-8s-8 3.6-8 8v2M4 10l-2-2m2 2l2-2M4 14c0 4.4 3.6 8 8 8s8-3.6 8-8v-2M20 14l2 2m-2-2l-2 2"/></svg>
@@ -263,27 +175,8 @@ button:focus-visible { outline: 2px solid var(--text); outline-offset: 2px; }
       <button class="round" id="snapBtn" type="button" aria-label="Take Photo" title="Take Photo">
         <svg viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
       </button>
-      <button class="round" id="recBtn" type="button" aria-label="Record Video" title="Record Video">
-        <svg viewBox="0 0 24 24" id="icoRec"><circle cx="12" cy="12" r="7" fill="#e02424" stroke="none"/><circle cx="12" cy="12" r="10"/></svg>
-      </button>
-      <button class="round" id="gameBtn" type="button" aria-label="Diwali Target Game" title="Target Game">
-        <svg viewBox="0 0 24 24"><path d="M6 12h4m-2-2v4M15 11h.01M18 13h.01M3 8a3 3 0 0 1 3-3h12a3 3 0 0 1 3 3v8a3 3 0 0 1-3 3H6a3 3 0 0 1-3-3V8z"/></svg>
-      </button>
-      <button class="round" id="musicBtn" type="button" aria-label="Festive Ambient Music" title="Festive Music">
-        <svg viewBox="0 0 24 24" id="icoMusicOff"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/><path d="M1 1l22 22"/></svg>
-        <svg viewBox="0 0 24 24" id="icoMusicOn" hidden><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
-      </button>
-      <button class="round" id="cardBtn" type="button" aria-label="Greeting Card" title="Greeting Card">
-        <svg viewBox="0 0 24 24"><path d="M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-7M4 8l8 5 8-5M4 8a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v1"/></svg>
-      </button>
     </div>
 
-    <div id="gameHud" hidden>
-      <span>🎯 Score: <strong id="gameScore">0</strong></span>
-      <span>⏱️ <strong id="gameTimer">60s</strong></span>
-      <span>💥 Combo: <strong id="gameCombo">x1</strong></span>
-    </div>
-    <div id="greetBanner" hidden><span id="bannerText">✨ Happy Diwali ✨</span></div>
     <div id="picker" role="toolbar" aria-label="Firecrackers"></div>
   </div>
   <div id="hint" role="status"></div>
@@ -292,45 +185,16 @@ button:focus-visible { outline: 2px solid var(--text); outline-offset: 2px; }
 <section id="start" aria-labelledby="title">
   <small>✨ Shubh Deepavali ✨</small>
   <h1 id="title">Diwali Patakha</h1>
-  <p id="lede">Camera AR Diwali fireworks, Anar, Chakkar, Phuljhadi, Sky Draw & Target Game!</p>
+  <p id="lede">Camera AR Diwali fireworks, Anar, Chakkar, Phuljhadi, Sky Draw & Lanterns!</p>
   <div class="start-features">
     <span>🎆 15+ Crackers</span>
     <span>✍️ Sky Draw</span>
-    <span>📸 Photo/Video</span>
-    <span>🎮 Target Game</span>
+    <span>📸 Photo Capture</span>
     <span>🏮 Sky Lanterns</span>
   </div>
   <button id="startBtn" type="button">Start Fireworks</button>
   <p class="fine" id="note" hidden></p>
 </section>
-
-
-<div id="gameOverModal" hidden>
-  <div class="modal-box">
-    <h2>🎉 Grand Finale! 🎉</h2>
-    <p>Diwali Sky Target Burst Complete!</p>
-    <div style="font-size: 28px; color: var(--marigold); margin: 12px 0; font-family: var(--font-title);">Score: <span id="finalScore">0</span></div>
-    <p id="gameVerdict" style="color: #7ef6a4; font-size: 15px; margin-bottom: 20px;">Top Sharpshooter!</p>
-    <button type="button" id="playAgainBtn" class="modal-btn btn-copy">Play Again</button>
-    <button type="button" id="closeGameModalBtn" class="modal-btn btn-close">Back to Sandbox</button>
-  </div>
-</div>
-<div id="cardModal" hidden>
-  <div class="modal-box">
-    <h2>✨ Diwali Greeting ✨</h2>
-    <p>Apna naam daalein aur dosto ko customized Diwali firecrackers card bhejein!</p>
-    <input type="text" id="nameInput" class="modal-input" placeholder="Aapka Naam (e.g. Mantu)" maxlength="30">
-    <button type="button" id="whatsappShareBtn" class="modal-btn btn-whatsapp">📲 WhatsApp Par Bhejein</button>
-    <button type="button" id="copyLinkBtn" class="modal-btn btn-copy">📋 Copy Greeting Link</button>
-    <button type="button" id="closeModalBtn" class="modal-btn btn-close">Close</button>
-  </div>
-</div>
-
-<div id="bootError" hidden>This needs a connection the first time it loads. Check yours and reload.</div>
-
-<script>
-  setTimeout(function () { if (!window.__ready) document.getElementById('bootError').hidden = false; }, 9000);
-</script>
 
 <script type="module">
 import * as THREE from 'three';
@@ -359,8 +223,7 @@ let renderer;
 try {
   renderer = new THREE.WebGLRenderer({ canvas: glCanvas, antialias: false, alpha: false, powerPreference: 'high-performance', preserveDrawingBuffer: false });
 } catch (err) {
-  $('bootError').textContent = "This browser couldn't start WebGL, which the fireworks need.";
-  $('bootError').hidden = false;
+  alert("This browser couldn't start WebGL, which the fireworks need.");
   throw err;
 }
 renderer.outputColorSpace = THREE.LinearSRGBColorSpace;
@@ -1459,7 +1322,7 @@ function fireAt(cx, cy) {
   const ray = rayAt(cx, cy), id = selected[mode];
   if (mode === 'sky') {
     const p = ray.clone().multiplyScalar(rand(100, 135));
-    if (id === 'rocket') { rocket(p); registerBurst('rocket'); checkGameHit(p); }
+    if (id === 'rocket') { rocket(p); registerBurst('rocket'); }
     else if (id === 'heart') { launch(p, heartBurst); }
     else if (id === 'star') { launch(p, starBurst); }
     else if (id === 'smiley') { launch(p, smileyBurst); }
@@ -1588,7 +1451,7 @@ function toggleUi(force) {
   if (uiHidden) hint('Controls hidden for recording. Two-finger tap brings them back.', 2400);
 }
 stage.addEventListener('pointerdown', (e) => {
-  if (!playing || (e.target.closest && e.target.closest('button, #picker, #actionSidebar, #cardModal, #gameOverModal, .modal-box'))) return;
+  if (!playing || (e.target.closest && e.target.closest('button, #picker, #actionSidebar'))) return;
   e.preventDefault();
   ensureAudio();
   fingers.set(e.pointerId, performance.now());
@@ -1718,7 +1581,6 @@ function step(now) {
   updateSparks(dt);
   updateSmoke(dt);
   updateRing(time);
-  updateGameTargets(dt);
   if (sceneLight > .002) {
     skyLight.visible = true;
     skyLight.material.uniforms.uC.value.setRGB(sceneLightC.x * sceneLight, sceneLightC.y * sceneLight, sceneLightC.z * sceneLight);
@@ -1753,7 +1615,6 @@ function heartBurst(p) {
     const d = randDir(), v = R * rand(0.2, 0.7);
     spawn(p.x, p.y, p.z, d[0] * v, d[1] * v, d[2] * v, rand(1.2, 2.0), D * 0.008, C.white, C.silver, 2.5, 3.0, F.TWINKLE);
   }
-  checkGameHit(p);
 }
 
 function starBurst(p) {
@@ -1770,7 +1631,6 @@ function starBurst(p) {
     const local = new THREE.Vector3(sx, sy, rand(-0.35, 0.35)).applyQuaternion(rot);
     spawn(p.x, p.y, p.z, local.x, local.y, local.z, rand(2.4, 3.4), D * 0.013, C.gold, C.charcoal, 1.3, 4.0, F.LATE | F.TRAIL, 0.9);
   }
-  checkGameHit(p);
 }
 
 function smileyBurst(p) {
@@ -1794,7 +1654,6 @@ function smileyBurst(p) {
     const local = new THREE.Vector3(Math.cos(t) * 0.6 * R, Math.sin(t) * 0.6 * R, 0).applyQuaternion(rot);
     spawn(p.x, p.y, p.z, local.x, local.y, local.z, rand(2.0, 2.8), D * 0.012, C.gold, C.red, 1.5, 3.5, F.LATE);
   }
-  checkGameHit(p);
 }
 
 function skyLantern(spot) {
@@ -1851,167 +1710,9 @@ function drawSkySpark(cx, cy) {
   sfx.sparkler(panFor(p));
 }
 
-/* --- Mini Game: Diwali Target Burst --- */
-let gameActive = false, gameScore = 0, gameTimer = 60, gameTimerInterval = 0, gameCombo = 1;
-const targets = [];
-const TARGET_GEO = new THREE.RingGeometry(1.2, 1.4, 32);
-
-function spawnGameTarget() {
-  if (!gameActive) return;
-  const mat = new THREE.MeshBasicMaterial({ color: 0x00ffff, side: THREE.DoubleSide, transparent: true, opacity: 0.85 });
-  const mesh = new THREE.Mesh(TARGET_GEO, mat);
-  const { f, r, u } = VIEW();
-  const dist = rand(60, 95);
-  const pos = f.clone().multiplyScalar(dist).addScaledVector(r, rand(-25, 25)).addScaledVector(u, rand(5, 30));
-  mesh.position.copy(pos);
-  mesh.lookAt(camera.position);
-  scene.add(mesh);
-  targets.push({ mesh, mat, pos, life: 12, drift: rand(-1.5, 1.5) });
-}
-
-function updateGameTargets(dt) {
-  for (let i = targets.length - 1; i >= 0; i--) {
-    const t = targets[i];
-    t.life -= dt;
-    t.pos.x += t.drift * dt;
-    t.mesh.position.copy(t.pos);
-    t.mesh.lookAt(camera.position);
-    t.mesh.scale.setScalar(1 + Math.sin(t.life * 4) * 0.15);
-    if (t.life <= 0) {
-      t.mesh.removeFromParent(); t.mat.dispose();
-      targets.splice(i, 1);
-    }
-  }
-}
-
-function checkGameHit(burstPos) {
-  if (!gameActive) return;
-  for (let i = targets.length - 1; i >= 0; i--) {
-    const t = targets[i];
-    if (burstPos.distanceTo(t.pos) < 22) {
-      // Hit!
-      for (let k = 0; k < 60; k++) {
-        const d = randDir(), v = rand(4, 12);
-        spawn(t.pos.x, t.pos.y, t.pos.z, d[0] * v, d[1] * v, d[2] * v, rand(0.6, 1.4), rand(0.015, 0.03), C.green, C.pink, 2, 2, F.TWINKLE);
-      }
-      sfx.burst(t.pos, 1.2);
-      vibrate([60, 60, 120]);
-      gameScore += 100 * gameCombo;
-      gameCombo = Math.min(gameCombo + 1, 5);
-      $('gameScore').textContent = gameScore;
-      $('gameCombo').textContent = `x${gameCombo}`;
-      hint(`🎯 HIT! +${100 * (gameCombo - 1)}!`, 1500);
-      t.mesh.removeFromParent(); t.mat.dispose();
-      targets.splice(i, 1);
-      setTimeout(spawnGameTarget, rand(800, 1600));
-    }
-  }
-}
-
-function toggleGame() {
-  gameActive = !gameActive;
-  $('gameHud').hidden = !gameActive;
-  if (gameActive) {
-    gameScore = 0; gameCombo = 1; gameTimer = 60;
-    $('gameScore').textContent = '0';
-    $('gameCombo').textContent = 'x1';
-    $('gameTimer').textContent = '60s';
-    hint('🎯 Target Game Started! Burst fireworks near glowing targets!', 3500);
-    spawnGameTarget(); setTimeout(spawnGameTarget, 1000);
-    clearInterval(gameTimerInterval);
-    gameTimerInterval = setInterval(() => {
-      gameTimer--;
-      $('gameTimer').textContent = `${gameTimer}s`;
-      if (targets.length < 2 && Math.random() < 0.6) spawnGameTarget();
-      if (gameTimer <= 0) {
-        endGame();
-      }
-    }, 1000);
-  } else {
-    clearInterval(gameTimerInterval);
-    targets.forEach(t => { t.mesh.removeFromParent(); t.mat.dispose(); });
-    targets.length = 0;
-    hint('Target Game Stopped', 2000);
-  }
-}
-
-function endGame() {
-  clearInterval(gameTimerInterval);
-  gameActive = false;
-  $('gameHud').hidden = true;
-  targets.forEach(t => { t.mesh.removeFromParent(); t.mat.dispose(); });
-  targets.length = 0;
-  finale(); // Grand finale reward
-  $('finalScore').textContent = gameScore;
-  const verdict = gameScore >= 1000 ? '👑 Diwali Legend! Sharpshooter Master!' : (gameScore >= 500 ? '🌟 Awesome Firecracker Pro!' : '💥 Good Try! Burst more next time!');
-  $('gameVerdict').textContent = verdict;
-  $('gameOverModal').hidden = false;
-}
-
-if ($('gameBtn')) $('gameBtn').addEventListener('click', toggleGame);
-if ($('playAgainBtn')) $('playAgainBtn').addEventListener('click', () => { $('gameOverModal').hidden = true; toggleGame(); });
-if ($('closeGameModalBtn')) $('closeGameModalBtn').addEventListener('click', () => { $('gameOverModal').hidden = true; });
-
-/* --- Video Recording (5-15s Reels/Status Recorder) --- */
-let mediaRecorder = null, recordedChunks = [], isRecording = false, recTimer = 0, recSec = 0;
-
-function startVideoRec() {
-  if (isRecording) { stopVideoRec(); return; }
-  recordedChunks = [];
-  const canvasStream = renderer.domElement.captureStream(30);
-  let combinedStream = canvasStream;
-  if (actx && master) {
-    try {
-      const audioDest = actx.createMediaStreamDestination();
-      master.connect(audioDest);
-      const audioTrack = audioDest.stream.getAudioTracks()[0];
-      if (audioTrack) combinedStream.addTrack(audioTrack);
-    } catch(e) {}
-  }
-  const mimeTypes = ['video/webm;codecs=vp9', 'video/webm;codecs=vp8', 'video/webm', 'video/mp4'];
-  let selectedMime = mimeTypes.find(m => MediaRecorder.isTypeSupported(m)) || '';
-  try {
-    mediaRecorder = new MediaRecorder(combinedStream, selectedMime ? { mimeType: selectedMime } : {});
-  } catch (err) {
-    hint('Video recording not supported on this browser', 2500);
-    return;
-  }
-  mediaRecorder.ondataavailable = (e) => { if (e.data && e.data.size > 0) recordedChunks.push(e.data); };
-  mediaRecorder.onstop = () => {
-    const blob = new Blob(recordedChunks, { type: selectedMime || 'video/webm' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.download = `diwali-patakha-${Date.now()}.${selectedMime.includes('mp4') ? 'mp4' : 'webm'}`;
-    a.href = url;
-    a.click();
-    vibrate([50, 50, 100]);
-    hint('🎥 Video saved! Perfect for WhatsApp Status & Reels!', 3500);
-    $('recBtn').classList.remove('recording');
-  };
-  mediaRecorder.start(200);
-  isRecording = true;
-  recSec = 0;
-  $('recBtn').classList.add('recording');
-  hint('🔴 Recording started! Tap record again to save.', 2500);
-  recTimer = setInterval(() => {
-    recSec++;
-    if (recSec >= 15) stopVideoRec();
-  }, 1000);
-}
-
-function stopVideoRec() {
-  if (!isRecording) return;
-  isRecording = false;
-  clearInterval(recTimer);
-  $('recBtn').classList.remove('recording');
-  if (mediaRecorder && mediaRecorder.state !== 'inactive') mediaRecorder.stop();
-}
-
-if ($('recBtn')) $('recBtn').addEventListener('click', startVideoRec);
-
 // Register PWA Service Worker
 if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('./sw.js?v=3').then(r => r.update()).catch(() => {});
+  navigator.serviceWorker.register('./sw.js?v=4').then(r => r.update()).catch(() => {});
 }
 
 /* --- Camera Flip, Snapshot, Music, and Greeting Card Logic --- */
@@ -2080,8 +1781,7 @@ if ($('snapBtn')) {
       ctx.font = `bold ${Math.round(26 * dpr)}px "Yatra One", serif`;
       ctx.shadowColor = 'rgba(0,0,0,0.85)';
       ctx.shadowBlur = 10 * dpr;
-      const txt = greetingName ? `✨ Happy Diwali from ${greetingName} ✨` : '✨ Shubh Deepavali ✨';
-      ctx.fillText(txt, snapCanvas.width / 2, snapCanvas.height - 24 * dpr);
+      ctx.fillText('✨ Shubh Deepavali ✨', snapCanvas.width / 2, snapCanvas.height - 24 * dpr);
 
 
       ctx.restore();
@@ -2098,100 +1798,9 @@ if ($('snapBtn')) {
   });
 }
 
-// Procedural Ambient Music
-let musicOn = false, musicInterval = 0;
-const RAGA_SCALE = [261.63, 293.66, 329.63, 392.00, 440.00, 523.25, 587.33, 659.25];
-function chimeNote(freq, dur = 2.6) {
-  if (!actx || !musicOn) return;
-  const t = actx.currentTime;
-  const osc = actx.createOscillator();
-  const gain = actx.createGain();
-  osc.type = 'triangle';
-  osc.frequency.setValueAtTime(freq, t);
-  gain.gain.setValueAtTime(0.06, t);
-  gain.gain.exponentialRampToValueAtTime(0.0001, t + dur);
-  osc.connect(gain);
-  gain.connect(master);
-  osc.start(t);
-  osc.stop(t + dur + 0.1);
-}
-if ($('musicBtn')) {
-  $('musicBtn').addEventListener('click', () => {
-    ensureAudio();
-    musicOn = !musicOn;
-    $('icoMusicOn').hidden = !musicOn;
-    $('icoMusicOff').hidden = musicOn;
-    if (musicOn) {
-      hint('🎵 Festive ambient music on', 2500);
-      const playNext = () => {
-        if (!musicOn) return;
-        const note = RAGA_SCALE[Math.floor(Math.random() * RAGA_SCALE.length)];
-        chimeNote(note, rand(2.2, 3.8));
-        musicInterval = setTimeout(playNext, rand(1200, 2400));
-      };
-      playNext();
-    } else {
-      clearTimeout(musicInterval);
-      hint('🎵 Music paused', 1800);
-    }
-  });
-}
-
-// Personalized Greeting Card logic
-const urlParams = new URLSearchParams(window.location.search);
-let greetingName = urlParams.get('from') || urlParams.get('name') || '';
-if (greetingName) {
-  const lede = $('lede');
-  if (lede) lede.textContent = `${greetingName} has sent you virtual Diwali firecrackers! Tap the sky or tilt down to celebrate.`;
-  const bText = $('bannerText');
-  if (bText) bText.textContent = `✨ Happy Diwali from ${greetingName} ✨`;
-  if ($('greetBanner')) $('greetBanner').hidden = false;
-}
-
-if ($('cardBtn')) {
-  $('cardBtn').addEventListener('click', () => {
-    $('cardModal').hidden = false;
-    if (greetingName) $('nameInput').value = greetingName;
-  });
-}
-if ($('closeModalBtn')) {
-  $('closeModalBtn').addEventListener('click', () => {
-    $('cardModal').hidden = true;
-  });
-}
-if ($('copyLinkBtn')) {
-  $('copyLinkBtn').addEventListener('click', () => {
-    const name = $('nameInput').value.trim() || 'Dost';
-    const url = `${window.location.origin}${window.location.pathname}?from=${encodeURIComponent(name)}`;
-    navigator.clipboard.writeText(url).then(() => {
-      hint('📋 Link copied! WhatsApp ya chat par share karein.', 3000);
-      $('cardModal').hidden = true;
-      greetingName = name;
-      $('bannerText').textContent = `✨ Happy Diwali from ${name} ✨`;
-      $('greetBanner').hidden = false;
-    }).catch(() => {
-      prompt('Copy your Diwali link:', url);
-    });
-  });
-}
-if ($('whatsappShareBtn')) {
-  $('whatsappShareBtn').addEventListener('click', () => {
-    const name = $('nameInput').value.trim() || 'Dost';
-    const url = `${window.location.origin}${window.location.pathname}?from=${encodeURIComponent(name)}`;
-    const text = `🪔✨ Happy Diwali! ✨🪔\n${name} ne aapke liye virtual Diwali firecrackers bheje hain! Link open karke phone se patakhe fodein:\n${url}`;
-    window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`, '_blank');
-    $('cardModal').hidden = true;
-    greetingName = name;
-    $('bannerText').textContent = `✨ Happy Diwali from ${name} ✨`;
-    $('greetBanner').hidden = false;
-  });
-}
-
 resize();
 renderPicker();
 if (!window.isSecureContext) { $('note').textContent = 'The camera and motion sensors only work from an https:// link. Here you get a painted night sky.'; $('note').hidden = false; }
-if (location.hash === '#debug') window.__p = { tick(n = 1, ms = 16.7) { for (let i = 0; i < n; i++) step(last + ms); }, look, selected, fireAt, setMode, get alive() { return aliveCount; }, get mode() { return mode; }, emitters, get W() { return W; }, get H() { return H; }, get floorY() { return floorY; }, get quality() { return quality; }, setPlaying(v) { playing = v; }, setGyro(v) { gyro = v; primed = false; }, pools,
-  fakeCam(paint) { const c = document.createElement('canvas'); c.width = 720; c.height = 1280; paint(c.getContext('2d'), 720, 1280); setInterval(() => paint(c.getContext('2d'), 720, 1280), 200); return attachFeed(c.captureStream(10)); } };
 window.__ready = true;
 requestAnimationFrame(frame);
 </script>

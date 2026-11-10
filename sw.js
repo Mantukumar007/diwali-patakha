@@ -1,8 +1,7 @@
-const CACHE_NAME = 'diwali-patakha-v3';
+const CACHE_NAME = 'diwali-patakha-v4';
 const ASSETS = [
   './',
   './index.html',
-  './index_offline.html',
   './manifest.json',
   './assets/three.module.js',
   './assets/YatraOne.ttf',
